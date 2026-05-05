@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>聚合与分组查询</h2>
+<div>
+    <a href="?q=1"><button>统计商品总数</button></a>
+    <a href="?q=2"><button>每类商品数量</button></a>
+    <a href="?q=3"><button>所有商品平均价格</button></a>
+    <a href="?q=4"><button>发布商品数量最多的用户</button></a>
+</div>
+
+{% if title %}
+<h3>{{ title }}</h3>
+<table>
+    {% if rows %}
+        <!-- 根据查询类型显示不同表头 -->
+        {% if title == '统计商品总数' %}
+            <tr><th>商品总数</th></tr>
+        {% elif title == '每类商品数量' %}
+            <tr><th>类别</th><th>数量</th></tr>
+        {% elif title == '所有商品平均价格' %}
+            <tr><th>平均价格</th></tr>
+        {% elif title == '发布商品数量最多的用户' %}
+            <tr><th>卖家ID</th><th>发布数量</th></tr>
+        {% endif %}
+        {% for row in rows %}
+        <tr>
+            {% for col in row %}<td>{{ col }}</td>{% endfor %}
+        </tr>
+        {% endfor %}
+    {% else %}
+        <tr><td>暂无数据</td></tr>
+    {% endif %}
+</table>
+{% endif %}
+{% endblock %}

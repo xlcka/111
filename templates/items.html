@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>商品列表</h2>
+<table>
+    <tr><th>ID</th><th>名称</th><th>类别</th><th>价格</th><th>状态</th><th>卖家</th><th>操作</th></tr>
+    {% for item in items %}
+    <tr>
+        <td>{{ item[0] }}</td>
+        <td>{{ item[1] }}</td>
+        <td>{{ item[2] }}</td>
+        <td>{{ item[3] }}</td>
+        <td>{% if item[4]==0 %}未售{% else %}已售{% endif %}</td>
+        <td>{{ item[5] }}</td>
+        <td>
+            {% if item[4]==0 %}
+            <form action="/buy/{{ item[0] }}" method="POST" style="display:inline;">
+                <select name="buyer_id" required>
+                    <option value="">选择买家</option>
+                    {% for u in users %}
+                    <option value="{{ u[0] }}">{{ u[1] }} ({{ u[0] }})</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">购买</button>
+            </form>
+            {% else %}
+            <span style="color: gray;">已售出</span>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

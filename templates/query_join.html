@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>连接查询</h2>
+<div>
+    <a href="?q=1"><button>所有已售商品及其买家姓名</button></a>
+    <a href="?q=2"><button>每个订单：商品名+买家名+日期</button></a>
+    <a href="?q=3"><button>卖家是u001的商品是否被购买</button></a>
+</div>
+
+{% if title %}
+<h3>{{ title }}</h3>
+<table>
+    {% if rows %}
+        <!-- 根据查询类型显示不同表头 -->
+        {% if title == '所有已售商品及其买家姓名' %}
+            <tr><th>商品名</th><th>买家姓名</th></tr>
+        {% elif title == '每个订单：商品名 + 买家名 + 日期' %}
+            <tr><th>订单ID</th><th>商品名</th><th>买家姓名</th><th>订单日期</th></tr>
+        {% elif title == '卖家是 u001 的商品是否被购买' %}
+            <tr><th>商品ID</th><th>商品名</th><th>是否已售</th></tr>
+        {% endif %}
+        {% for row in rows %}
+        <tr>
+            {% for col in row %}<td>{{ col }}</td>{% endfor %}
+        </tr>
+        {% endfor %}
+    {% else %}
+        <tr><td colspan="4">暂无数据</td></tr>
+    {% endif %}
+</table>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>视图查询</h2>
+<div>
+    <a href="?v=sold"><button>已售商品视图（商品名 + 买家ID）</button></a>
+    <a href="?v=unsold"><button>未售商品视图</button></a>
+</div>
+
+{% if title %}
+<h3>{{ title }}</h3>
+<table>
+    {% if rows %}
+        {% if title == '已售商品视图（商品名 + 买家ID）' %}
+            <tr><th>商品名</th><th>买家ID</th></tr>
+        {% elif title == '未售商品视图' %}
+            <tr><th>商品ID</th><th>商品名</th><th>类别</th><th>价格</th><th>状态</th><th>卖家ID</th></tr>
+        {% endif %}
+        {% for row in rows %}
+        <tr>
+            {% for col in row %}<td>{{ col }}</td>{% endfor %}
+        </tr>
+        {% endfor %}
+    {% else %}
+        <tr><td>暂无数据</td></tr>
+    {% endif %}
+</table>
+{% endif %}
+{% endblock %}

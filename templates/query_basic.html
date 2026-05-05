@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>基本查询</h2>
+<div>
+    <a href="?q=1"><button>所有未售出的商品</button></a>
+    <a href="?q=2"><button>价格大于30的商品</button></a>
+    <a href="?q=3"><button>“生活用品”类商品</button></a>
+    <a href="?q=4"><button>u001 发布的所有商品</button></a>
+</div>
+
+{% if title %}
+<h3>{{ title }}</h3>
+<table>
+    {% if rows %}
+        <tr>
+            <th>商品ID</th><th>商品名</th><th>类别</th><th>价格</th><th>状态</th><th>卖家ID</th>
+        </tr>
+        {% for row in rows %}
+        <tr>
+            {% for col in row %}<td>{{ col }}</td>{% endfor %}
+        </tr>
+        {% endfor %}
+    {% else %}
+        <tr><td colspan="6">暂无数据</td></tr>
+    {% endif %}
+</table>
+{% endif %}
+{% endblock %}

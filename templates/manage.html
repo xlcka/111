@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>商品管理</h2>
+
+<h3>商品列表</h3>
+<table>
+    <tr><th>ID</th><th>名称</th><th>类别</th><th>价格</th><th>状态</th><th>卖家</th></tr>
+    {% for item in items %}
+    <tr><td>{{ item[0] }}</td><td>{{ item[1] }}</td><td>{{ item[2] }}</td><td>{{ item[3] }}</td>
+        <td>{% if item[4]==0 %}未售{% else %}已售{% endif %}</td><td>{{ item[5] }}</td></tr>
+    {% endfor %}
+</table>
+
+<h3>添加新商品</h3>
+<form action="/item/add" method="POST">
+    <label>商品ID <input name="item_id" required></label><br>
+    <label>名称 <input name="item_name" required></label><br>
+    <label>类别 <input name="category" required></label><br>
+    <label>价格 <input name="price" type="number" step="0.01" required></label><br>
+    <label>卖家 
+        <select name="seller_id">
+            {% for u in users %}<option value="{{ u[0] }}">{{ u[1] }} ({{ u[0] }})</option>{% endfor %}
+        </select>
+    </label><br>
+    <button type="submit">添加</button>
+</form>
+
+<h3>修改商品价格</h3>
+<form action="/item/edit" method="POST">
+    <label>商品 
+        <select name="item_id">
+            {% for item in items %}<option value="{{ item[0] }}">{{ item[1] }}</option>{% endfor %}
+        </select>
+    </label><br>
+    <label>新价格 <input name="new_price" type="number" step="0.01" required></label><br>
+    <button type="submit">修改</button>
+</form>
+
+<h3>删除未售商品</h3>
+<form action="/item/delete" method="POST" onsubmit="return confirm('确认删除？')">
+    <label>商品 
+        <select name="item_id">
+            {% for item in items if item[4]==0 %}<option value="{{ item[0] }}">{{ item[1] }}</option>{% endfor %}
+        </select>
+    </label>
+    <button type="submit">删除</button>
+</form>
+{% endblock %}
