@@ -390,6 +390,6 @@ def view_query():
         conn.close()
         return render_template('query_view.html', title=title, rows=rows)
     return render_template('query_view.html')
-
+app = app
 if __name__ == '__main__':
     app.run(debug=True)
