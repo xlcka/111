@@ -128,11 +128,13 @@ def init_db():
     except Exception as e:
         print("初始化数据库错误:", e)
 
-# 启动时自动初始化
-try:
-    init_db()
-except Exception as e:
-    print(f"数据库初始化出错：{e}")
+@app.route('/init-db')
+def run_init_db():
+    try:
+        init_db()
+        return "✅ 数据库初始化成功！你可以开始使用网站了。"
+    except Exception as e:
+        return f"❌ 数据库初始化失败：{str(e)}"
 
 # ====================== 页面路由（完全不变）======================
 @app.route('/')
